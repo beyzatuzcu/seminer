@@ -1,0 +1,16 @@
+{
+  "duyurular": [
+    {
+      "baslik": "Örnek Duyuru 1",
+      "aciklama": "Bu bir örnek duyurudur.",
+      "tarih": "14 Nisan 2023",
+      "link": "https://www.orneksite.com/duyuru/1"
+    },
+    {
+      "baslik": "Örnek Duyuru 2",
+      "aciklama": "Bu da başka bir örnek duyurudur.",
+      "tarih": "15 Nisan 2023",
+      "link": "https://www.orneksite.com/duyuru/2"
+    }
+  ]
+}
