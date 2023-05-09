@@ -332,12 +332,12 @@
 							<input type="text" id="mahalle" name="mahalle"  class="form-control"><br>
 						</div>
 					</div>
-					<div class="form-group row">
+					<!--<div class="form-group row">
 						<label for="sokak" class="col-sm-2 col-form-label">Cadde/Sokak:</label>
 						<div class="col-sm-10">
 							<input type="text" id="sokak" name="sokak"  class="form-control"><br>
 						</div>
-					</div>
+					</div>-->
 
 					<input type="submit" value="Sorgula">
 			</div>
@@ -369,20 +369,22 @@
         $il = $_POST['il'];
         $ilce = $_POST['ilce'];
         $mahalle = $_POST['mahalle'];
-        $sokak = $_POST['sokak'];
+        //$sokak = $_POST['sokak'];
 
-        $sql = "SELECT * FROM toplanma_alani 
-                WHERE il = '$il' AND ilce = '$ilce' AND mahalle = '$mahalle' AND sokak = '$sokak'";
+        $sql = "SELECT ad, adres FROM toplanma_alani 
+                WHERE il = '$il' AND ilce = '$ilce' AND mahalle = '$mahalle'";
+
 
         // Sorguyu çalıştırma
         $result = mysqli_query($conn, $sql);
 
         // Sonuçları işleme
         if (mysqli_num_rows($result) > 0) {
-            echo "<h2>Sonuçlar:</h2>";
+            echo "<br><br><h2>Sonuçlar:</h2> <br>";
             // Sonuçlar varsa, verileri döngü ile al
             while($row = mysqli_fetch_assoc($result)) {
-                echo "<p>İl: " . $row["il"]. " - İlçe: " . $row["ilce"]. " - Mahalle: " . $row["mahalle"]. " - Sokak: " . $row["sokak"]. "</p>";
+				echo "<p>Adı: " . $row["ad"]. "</p> <br>";
+				echo "<p>Adresi: " . $row["adres"]. "</p>";
             }
         } else {
             echo "<p>Kayıt bulunamadı</p>";
@@ -390,7 +392,8 @@
 
         mysqli_close($conn);
     }
-    ?>
+?>
+
 
 			</center>
 
