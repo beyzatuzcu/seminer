@@ -68,7 +68,7 @@ $conn->close();
         <a href="onlem.php"><div id="info">Önlemler</div></a>
         <a href="index.php#ended"><div id="sss">SSS</div></a>
         <a href="giris.php"><div id="open-ticket">GİRİŞ</div></a>
-        <a href="arttirilmisgerceklik.php"><div id="boosted-reality">Arttırılmış Gerçekçilik</div></a>
+        <a href="deprembilgi.php"><div id="boosted-reality">DepremBilgi</div></a>
         <a href="index.php"><div id="top-title">DEPREM - <span id="top-title-color">SİZİZ</span></div></a>
     </div>
 </div>
