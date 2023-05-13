@@ -76,7 +76,7 @@ th {
 }
 #analiz{
     flex-basis: 300px;
-    height: 1500px;
+    height: 5000px;
     width: 100%;
     background-color: #105749;
     z-index: 0;
@@ -103,7 +103,21 @@ h1, h3, p{
 			flex-wrap: wrap;
             justify-content: space-between;
 		}
-
+        .container5 {
+			display: flex;
+			flex-wrap: wrap;
+            justify-content: space-between;
+		}
+        .container6 {
+			display: flex;
+			flex-wrap: wrap;
+            justify-content: space-between;
+		}
+        .container7 {
+			display: flex;
+			flex-wrap: wrap;
+            justify-content: space-between;
+		}
 
         .box {
             width: calc(33.33% - 10px);
@@ -146,7 +160,7 @@ if (!$conn) {
 }
 
 // Hasar Tespit Edildi olan kayıtların sorgusu
-$sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Hasar Tespit Edildi'";
+$sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Hasarsız'";
 
 // Hasar Tespit Edildi olan kayıtların tabloya eklenmesi
 $result_hte = mysqli_query($conn, $sql_hte);
@@ -165,6 +179,53 @@ echo "<h3><br><br>Detaylı Gösterim Alanı<br><br><br><br></h3>";
 
 mysqli_close($conn);
 ?>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+tbody{
+  height: 200px;
+  overflow-y: scroll;
+  display: block;
+}
+
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead {
+  width: calc( 100% - 1em )
+}
+
+table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 1em;
+  font-family: sans-serif;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+</style>
 
 <div class="container2">
     <div id=box>
@@ -182,10 +243,10 @@ mysqli_close($conn);
             }
 
             // Hasar Tespit Edildi olan kayıtların sorgusu
-            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Hasar Tespit Edildi'";
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Hasarsız'";
 
             // İl verilerinin alınması
-            $sql_il = "SELECT il, COUNT(*) as count FROM hasar_tespiti WHERE durum='Hasar Tespit Edildi' GROUP BY il";
+            $sql_il = "SELECT il, COUNT(*) as count FROM hasar_tespiti WHERE durum='Hasarsız' GROUP BY il";
             $result_il = mysqli_query($conn, $sql_il);
 
             // Chart'ın oluşturulması
@@ -234,10 +295,10 @@ mysqli_close($conn);
             }
 
             // Hasar Tespit Edildi olan kayıtların sorgusu
-            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Hasar Tespit Edildi'";
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Hasarsız'";
 
             // İlce verilerinin alınması
-            $sql_ilce = "SELECT ilce, COUNT(*) as count FROM hasar_tespiti WHERE durum='Hasar Tespit Edildi' GROUP BY ilce";
+            $sql_ilce = "SELECT ilce, COUNT(*) as count FROM hasar_tespiti WHERE durum='Hasarsız' GROUP BY ilce";
             $result_ilce = mysqli_query($conn, $sql_ilce);
 
             // Chart'ın oluşturulması
@@ -285,10 +346,10 @@ mysqli_close($conn);
             }
 
             // Hasar Tespit Edildi olan kayıtların sorgusu
-            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Hasar Tespit Edildi'";
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Hasarsız'";
 
             // mahalle verilerinin alınması
-            $sql_mahalle = "SELECT mahalle, COUNT(*) as count FROM hasar_tespiti WHERE durum='Hasar Tespit Edildi' GROUP BY mahalle";
+            $sql_mahalle = "SELECT mahalle, COUNT(*) as count FROM hasar_tespiti WHERE durum='Hasarsız' GROUP BY mahalle";
             $result_mahalle = mysqli_query($conn, $sql_mahalle);
 
             // Chart'ın oluşturulması
@@ -322,160 +383,1198 @@ mysqli_close($conn);
         ?>
     </div>
 </div>
-<br><br>
-<div class="container3">
-    <div class="box">
-        <?php
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "seminer";
-
-        // Veritabanı bağlantısını oluştur
-        $conn = mysqli_connect($servername, $username, $password, $dbname);
-
-        // Bağlantıyı kontrol et
-        if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-        }
-
-        // Hasar Tespit Edildi olan kayıtların sorgusu
-        $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Hasar Tespit Edildi'";
-
-        // Mahalle verilerinin alınması
-        $sql_mahalle = "SELECT mahalle, COUNT(*) as count FROM hasar_tespiti WHERE durum='Hasar Tespit Edildi' GROUP BY mahalle";
-        $result_mahalle = mysqli_query($conn, $sql_mahalle);
-
-        // Mahalle adları ve hasar sayıları için boş dizi tanımlama
-        $mahalleler = array();
-        $hasar_sayilari = array();
-
-        // Veritabanından alınan mahalle verilerini diziye aktar
-        if (mysqli_num_rows($result_mahalle) > 0) {
-        while($row = mysqli_fetch_assoc($result_mahalle)) {
-        array_push($mahalleler, $row["mahalle"]);
-        array_push($hasar_sayilari, $row["count"]);
-        }
-        }
-        // Veritabanı bağlantısını kapat
-        mysqli_close($conn);
-        ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Mahalle', 'Hasar Sayısı'],
-                <?php 
-                // Dizideki her bir eleman için veri satırı oluşturma
-                for($i = 0; $i < count($mahalleler); $i++) {
-                    echo "['" . $mahalleler[$i] . "', " . $hasar_sayilari[$i] . "],";
-                }
-                ?>
-            ]);
-
-            var options = {
-                title: 'Hasar Tespit Edildi Durumuna Göre Mahallelerdeki Hasar Sayısı',
-                hAxis: {
-                    title: 'Mahalle'
-                },
-                vAxis: {
-                    title: 'Hasar Sayısı'
-                }
-            };
-
-            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
-        }
-    </script>
-</head>
-<body>
-    <div id="chart_div" style="width: 900px; height: 500px;"></div>
-</body>
-</html>
-</div>
-
-<div class="box">
+<br><br><br><br>
 <?php
+// Veritabanı bağlantısı
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "seminer";
 
-// Veritabanı bağlantısını oluştur
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-// Bağlantıyı kontrol et
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
 // Hasar Tespit Edildi olan kayıtların sorgusu
-$sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Hasar Tespit Edildi'";
+$sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Az Hasarlı'";
 
-// Mahalle verilerinin alınması
-$sql_mahalle = "SELECT mahalle, COUNT(*) as count FROM hasar_tespiti WHERE durum='Hasar Tespit Edildi' GROUP BY mahalle";
-$result_mahalle = mysqli_query($conn, $sql_mahalle);
-
-// Mahalle adları ve hasar sayıları için boş dizi tanımlama
-$mahalleler = array();
-$hasar_sayilari = array();
-
-// Veritabanından alınan mahalle verilerini diziye aktar
-if (mysqli_num_rows($result_mahalle) > 0) {
-    while($row = mysqli_fetch_assoc($result_mahalle)) {
-        array_push($mahalleler, $row["mahalle"]);
-        array_push($hasar_sayilari, $row["count"]);
+// Hasar Tespit Edildi olan kayıtların tabloya eklenmesi
+$result_hte = mysqli_query($conn, $sql_hte);
+if (mysqli_num_rows($result_hte) > 0) {
+    
+    echo "<table>";
+    echo "<tr><th>Aşki Kodu</th><th>İl</th><th>İlçe</th><th>Mahalle</th><th>Sokak</th><th>Bina No</th><th>Durum</th><th>İtiraz Sonucu</th></tr>";
+    while($row = mysqli_fetch_assoc($result_hte)) {
+        echo "<tr><td>".$row["aski_kodu"]."</td><td>".$row["il"]."</td><td>".$row["ilce"]."</td><td>".$row["mahalle"]."</td><td>".$row["sokak"]."</td><td>".$row["bina_no"]."</td><td>".$row["durum"]."</td><td>".$row["itiraz_sonucu"]."</td></tr>";
     }
+    echo "</table>";
+} else {
+    echo "Kayıt bulunamadı";
 }
+echo "<h3><br><br>Detaylı Gösterim Alanı<br><br><br><br></h3>";
 
-// Veritabanı bağlantısını kapat
 mysqli_close($conn);
 ?>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
 
-<html>
-<head>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript">
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
+th, td {
+  text-align: left;
+  padding: 8px;
+}
 
-    function drawChart() {
-      var data = google.visualization.arrayToDataTable([
-        ['Mahalle', 'Hasar Sayısı'],
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+tbody{
+  height: 200px;
+  overflow-y: scroll;
+  display: block;
+}
+
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead {
+  width: calc( 100% - 1em )
+}
+
+table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 1em;
+  font-family: sans-serif;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+</style>
+<div class="container3">
+    <div id=box>
         <?php
-        for($i = 0; $i < count($mahalleler); $i++) {
-          echo "['" . $mahalleler[$i] . "', " . $hasar_sayilari[$i] . "],";
-        }
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
+
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Az Hasarlı'";
+
+            // İl verilerinin alınması
+            $sql_il = "SELECT il, COUNT(*) as count FROM hasar_tespiti WHERE durum='Az Hasarlı' GROUP BY il";
+            $result_il = mysqli_query($conn, $sql_il);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head><center>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['İl', 'İl Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_il)) {
+                        echo "['".$row["il"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "İl Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_33"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </center></head>
+            <body>
+                <div id="piechart_33" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
         ?>
-      ]);
 
-      var options = {
-        title: 'Hasar Tespit Edildi olan kayıtların mahalle bazlı dağılımı',
-        width: 900,
-        height: 500
-      };
+    </div>
+    <div id=box>
+        <?php
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
 
-      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
-    }
-  </script>
-</head>
-<body>
-  <div id="chart_div"></div>
-</body>
-</html>
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
 
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
 
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Az Hasarlı'";
 
+            // İlce verilerinin alınması
+            $sql_ilce = "SELECT ilce, COUNT(*) as count FROM hasar_tespiti WHERE durum='Az Hasarlı' GROUP BY ilce";
+            $result_ilce = mysqli_query($conn, $sql_ilce);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['İlce', 'İlçe Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_ilce)) {
+                        echo "['".$row["ilce"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "İlçe Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_322"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </head>
+            <body>
+                <div id="piechart_322" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
+        ?>
+    </div>
+    <div id=box>
+        <?php
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
+
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Az Hasarlı'";
+
+            // mahalle verilerinin alınması
+            $sql_mahalle = "SELECT mahalle, COUNT(*) as count FROM hasar_tespiti WHERE durum='Az Hasarlı' GROUP BY mahalle";
+            $result_mahalle = mysqli_query($conn, $sql_mahalle);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['Mahalle', 'Mahalle Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_mahalle)) {
+                        echo "['".$row["mahalle"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "Mahalle Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_333"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </head>
+            <body>
+                <div id="piechart_333" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
+        ?>
+    </div>
 </div>
-</div>
+<br><br>
+<br><br><br><br>
+<?php
+// Veritabanı bağlantısı
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "seminer";
+
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Hasar Tespit Edildi olan kayıtların sorgusu
+$sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Orta Hasarlı'";
+
+// Hasar Tespit Edildi olan kayıtların tabloya eklenmesi
+$result_hte = mysqli_query($conn, $sql_hte);
+if (mysqli_num_rows($result_hte) > 0) {
     
+    echo "<table>";
+    echo "<tr><th>Aşki Kodu</th><th>İl</th><th>İlçe</th><th>Mahalle</th><th>Sokak</th><th>Bina No</th><th>Durum</th><th>İtiraz Sonucu</th></tr>";
+    while($row = mysqli_fetch_assoc($result_hte)) {
+        echo "<tr><td>".$row["aski_kodu"]."</td><td>".$row["il"]."</td><td>".$row["ilce"]."</td><td>".$row["mahalle"]."</td><td>".$row["sokak"]."</td><td>".$row["bina_no"]."</td><td>".$row["durum"]."</td><td>".$row["itiraz_sonucu"]."</td></tr>";
+    }
+    echo "</table>";
+} else {
+    echo "Kayıt bulunamadı";
+}
+echo "<h3><br><br>Detaylı Gösterim Alanı<br><br><br><br></h3>";
+
+mysqli_close($conn);
+?>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+tbody{
+  height: 200px;
+  overflow-y: scroll;
+  display: block;
+}
+
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead {
+  width: calc( 100% - 1em )
+}
+
+table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 1em;
+  font-family: sans-serif;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+</style>
+<div class="container4">
+    <div id=box>
+        <?php
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
+
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Orta Hasarlı'";
+
+            // İl verilerinin alınması
+            $sql_il = "SELECT il, COUNT(*) as count FROM hasar_tespiti WHERE durum='Orta Hasarlı' GROUP BY il";
+            $result_il = mysqli_query($conn, $sql_il);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head><center>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['İl', 'İl Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_il)) {
+                        echo "['".$row["il"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "İl Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_3434"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </center></head>
+            <body>
+                <div id="piechart_3434" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
+        ?>
+
+    </div>
+    <div id=box>
+        <?php
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
+
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Orta Hasarlı'";
+
+            // İlce verilerinin alınması
+            $sql_ilce = "SELECT ilce, COUNT(*) as count FROM hasar_tespiti WHERE durum='Orta Hasarlı' GROUP BY ilce";
+            $result_ilce = mysqli_query($conn, $sql_ilce);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['İlce', 'İlçe Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_ilce)) {
+                        echo "['".$row["ilce"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "İlçe Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_342"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </head>
+            <body>
+                <div id="piechart_342" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
+        ?>
+    </div>
+    <div id=box>
+        <?php
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
+
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Orta Hasarlı'";
+
+            // mahalle verilerinin alınması
+            $sql_mahalle = "SELECT mahalle, COUNT(*) as count FROM hasar_tespiti WHERE durum='Orta Hasarlı' GROUP BY mahalle";
+            $result_mahalle = mysqli_query($conn, $sql_mahalle);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['Mahalle', 'Mahalle Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_mahalle)) {
+                        echo "['".$row["mahalle"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "Mahalle Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_334"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </head>
+            <body>
+                <div id="piechart_334" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
+        ?>
+    </div>
+</div>
+<br><br>
+<br><br>
+<br><br><br><br>
+<?php
+// Veritabanı bağlantısı
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "seminer";
+
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Hasar Tespit Edildi olan kayıtların sorgusu
+$sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Ağır Hasarlı'";
+
+// Hasar Tespit Edildi olan kayıtların tabloya eklenmesi
+$result_hte = mysqli_query($conn, $sql_hte);
+if (mysqli_num_rows($result_hte) > 0) {
+    
+    echo "<table>";
+    echo "<tr><th>Aşki Kodu</th><th>İl</th><th>İlçe</th><th>Mahalle</th><th>Sokak</th><th>Bina No</th><th>Durum</th><th>İtiraz Sonucu</th></tr>";
+    while($row = mysqli_fetch_assoc($result_hte)) {
+        echo "<tr><td>".$row["aski_kodu"]."</td><td>".$row["il"]."</td><td>".$row["ilce"]."</td><td>".$row["mahalle"]."</td><td>".$row["sokak"]."</td><td>".$row["bina_no"]."</td><td>".$row["durum"]."</td><td>".$row["itiraz_sonucu"]."</td></tr>";
+    }
+    echo "</table>";
+} else {
+    echo "Kayıt bulunamadı";
+}
+echo "<h3><br><br>Detaylı Gösterim Alanı<br><br><br><br></h3>";
+
+mysqli_close($conn);
+?>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+tbody{
+  height: 200px;
+  overflow-y: scroll;
+  display: block;
+}
+
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead {
+  width: calc( 100% - 1em )
+}
+
+table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 1em;
+  font-family: sans-serif;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+</style>
+<div class="container5">
+    <div id=box>
+        <?php
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
+
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Ağır Hasarlı'";
+
+            // İl verilerinin alınması
+            $sql_il = "SELECT il, COUNT(*) as count FROM hasar_tespiti WHERE durum='Ağır Hasarlı' GROUP BY il";
+            $result_il = mysqli_query($conn, $sql_il);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head><center>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['İl', 'İl Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_il)) {
+                        echo "['".$row["il"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "İl Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_10"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </center></head>
+            <body>
+                <div id="piechart_10" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
+        ?>
+
+    </div>
+    <div id=box>
+        <?php
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
+
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Ağır Hasarlı'";
+
+            // İlce verilerinin alınması
+            $sql_ilce = "SELECT ilce, COUNT(*) as count FROM hasar_tespiti WHERE durum='Ağır Hasarlı' GROUP BY ilce";
+            $result_ilce = mysqli_query($conn, $sql_ilce);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['İlce', 'İlçe Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_ilce)) {
+                        echo "['".$row["ilce"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "İlçe Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_11"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </head>
+            <body>
+                <div id="piechart_11" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
+        ?>
+    </div>
+    <div id=box>
+        <?php
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
+
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Ağır Hasarlı'";
+
+            // mahalle verilerinin alınması
+            $sql_mahalle = "SELECT mahalle, COUNT(*) as count FROM hasar_tespiti WHERE durum='Ağır Hasarlı' GROUP BY mahalle";
+            $result_mahalle = mysqli_query($conn, $sql_mahalle);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['Mahalle', 'Mahalle Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_mahalle)) {
+                        echo "['".$row["mahalle"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "Mahalle Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_12"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </head>
+            <body>
+                <div id="piechart_12" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
+        ?>
+    </div>
+</div>
+<br><br>
+<?php
+// Veritabanı bağlantısı
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "seminer";
+
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Hasar Tespit Edildi olan kayıtların sorgusu
+$sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Girilemeyen Bina'";
+
+// Hasar Tespit Edildi olan kayıtların tabloya eklenmesi
+$result_hte = mysqli_query($conn, $sql_hte);
+if (mysqli_num_rows($result_hte) > 0) {
+    
+    echo "<table>";
+    echo "<tr><th>Aşki Kodu</th><th>İl</th><th>İlçe</th><th>Mahalle</th><th>Sokak</th><th>Bina No</th><th>Durum</th><th>İtiraz Sonucu</th></tr>";
+    while($row = mysqli_fetch_assoc($result_hte)) {
+        echo "<tr><td>".$row["aski_kodu"]."</td><td>".$row["il"]."</td><td>".$row["ilce"]."</td><td>".$row["mahalle"]."</td><td>".$row["sokak"]."</td><td>".$row["bina_no"]."</td><td>".$row["durum"]."</td><td>".$row["itiraz_sonucu"]."</td></tr>";
+    }
+    echo "</table>";
+} else {
+    echo "Kayıt bulunamadı";
+}
+echo "<h3><br><br>Detaylı Gösterim Alanı<br><br><br><br></h3>";
+
+mysqli_close($conn);
+?>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+tbody{
+  height: 200px;
+  overflow-y: scroll;
+  display: block;
+}
+
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead {
+  width: calc( 100% - 1em )
+}
+
+table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 1em;
+  font-family: sans-serif;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+</style>
+
+<div class="container2">
+    <div id=box>
+        <?php
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
+
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Girilemeyen Bina'";
+
+            // İl verilerinin alınması
+            $sql_il = "SELECT il, COUNT(*) as count FROM hasar_tespiti WHERE durum='Girilemeyen Bina' GROUP BY il";
+            $result_il = mysqli_query($conn, $sql_il);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head><center>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['İl', 'İl Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_il)) {
+                        echo "['".$row["il"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "İl Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_3b"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </center></head>
+            <body>
+                <div id="piechart_3b" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
+        ?>
+
+    </div>
+    <div id=box>
+        <?php
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
+
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Girilemeyen Bina'";
+
+            // İlce verilerinin alınması
+            $sql_ilce = "SELECT ilce, COUNT(*) as count FROM hasar_tespiti WHERE durum='Girilemeyen Bina' GROUP BY ilce";
+            $result_ilce = mysqli_query($conn, $sql_ilce);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['İlce', 'İlçe Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_ilce)) {
+                        echo "['".$row["ilce"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "İlçe Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_bb"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </head>
+            <body>
+                <div id="piechart_bb" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
+        ?>
+    </div>
+    <div id=box>
+        <?php
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
+
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Girilemeyen Bina'";
+
+            // mahalle verilerinin alınması
+            $sql_mahalle = "SELECT mahalle, COUNT(*) as count FROM hasar_tespiti WHERE durum='Girilemeyen Bina' GROUP BY mahalle";
+            $result_mahalle = mysqli_query($conn, $sql_mahalle);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['Mahalle', 'Mahalle Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_mahalle)) {
+                        echo "['".$row["mahalle"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "Mahalle Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_b"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </head>
+            <body>
+                <div id="piechart_b" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
+        ?>
+    </div>
+</div>
+<br><br><br><br>
+<?php
+// Veritabanı bağlantısı
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "seminer";
+
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Hasar Tespit Edildi olan kayıtların sorgusu
+$sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Değerlendirme Dışı'";
+
+// Hasar Tespit Edildi olan kayıtların tabloya eklenmesi
+$result_hte = mysqli_query($conn, $sql_hte);
+if (mysqli_num_rows($result_hte) > 0) {
+    
+    echo "<table>";
+    echo "<tr><th>Aşki Kodu</th><th>İl</th><th>İlçe</th><th>Mahalle</th><th>Sokak</th><th>Bina No</th><th>Durum</th><th>İtiraz Sonucu</th></tr>";
+    while($row = mysqli_fetch_assoc($result_hte)) {
+        echo "<tr><td>".$row["aski_kodu"]."</td><td>".$row["il"]."</td><td>".$row["ilce"]."</td><td>".$row["mahalle"]."</td><td>".$row["sokak"]."</td><td>".$row["bina_no"]."</td><td>".$row["durum"]."</td><td>".$row["itiraz_sonucu"]."</td></tr>";
+    }
+    echo "</table>";
+} else {
+    echo "Kayıt bulunamadı";
+}
+echo "<h3><br><br>Detaylı Gösterim Alanı<br><br><br><br></h3>";
+
+mysqli_close($conn);
+?>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+tbody{
+  height: 200px;
+  overflow-y: scroll;
+  display: block;
+}
+
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead {
+  width: calc( 100% - 1em )
+}
+
+table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 1em;
+  font-family: sans-serif;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+</style>
+<div class="container3">
+    <div id=box>
+        <?php
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
+
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Değerlendirme Dışı'";
+
+            // İl verilerinin alınması
+            $sql_il = "SELECT il, COUNT(*) as count FROM hasar_tespiti WHERE durum='Değerlendirme Dışı' GROUP BY il";
+            $result_il = mysqli_query($conn, $sql_il);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head><center>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['İl', 'İl Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_il)) {
+                        echo "['".$row["il"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "İl Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_aaa"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </center></head>
+            <body>
+                <div id="piechart_aaa" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
+        ?>
+
+    </div>
+    <div id=box>
+        <?php
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
+
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Değerlendirme Dışı'";
+
+            // İlce verilerinin alınması
+            $sql_ilce = "SELECT ilce, COUNT(*) as count FROM hasar_tespiti WHERE durum='Değerlendirme Dışı' GROUP BY ilce";
+            $result_ilce = mysqli_query($conn, $sql_ilce);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['İlce', 'İlçe Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_ilce)) {
+                        echo "['".$row["ilce"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "İlçe Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_aa"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </head>
+            <body>
+                <div id="piechart_aa" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
+        ?>
+    </div>
+    <div id=box>
+        <?php
+            // Veritabanı bağlantısı
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "seminer";
+
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            // Hasar Tespit Edildi olan kayıtların sorgusu
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Değerlendirme Dışı'";
+
+            // mahalle verilerinin alınması
+            $sql_mahalle = "SELECT mahalle, COUNT(*) as count FROM hasar_tespiti WHERE durum='Değerlendirme Dışı ' GROUP BY mahalle";
+            $result_mahalle = mysqli_query($conn, $sql_mahalle);
+
+            // Chart'ın oluşturulması
+            echo '<html>
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                google.charts.load("current", {"packages":["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([';
+                    echo "['Mahalle', 'Mahalle Bazlı Hasar Tespit Sayısı'],";
+                    while($row = mysqli_fetch_assoc($result_mahalle)) {
+                        echo "['".$row["mahalle"]."', ".$row["count"]."],";
+                    }
+                    echo ']);
+                    var options = {
+                    title: "Mahalle Bazlı Hasar Tespit Sayıları",
+                    is3D: true,
+                    };
+                    var chart = new google.visualization.PieChart(document.getElementById("piechart_a"));
+                    chart.draw(data, options);
+                }
+                </script>
+            </head>
+            <body>
+                <div id="piechart_a" style="width: 450px; height: 250px;"></div>
+            </body>
+            </html>';
+            mysqli_close($conn);
+        ?>
+    </div>
+</div>
+<br><br>
+<br><br><br><br>
+</div>
 </body></center>
 </html>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js">

@@ -87,6 +87,47 @@ h1, h3, p{
     color: #fff;
     text-align: center;
 }
+form {
+  display: inline-block;
+  background-color: #f2f2f2;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="text"] {
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+}
+
+input[type="submit"] {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 15px;
+  cursor: pointer;
+}
+
+
+/* Arama sonuçları stilleri */
+#searchResults {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#searchResults li {
+  margin: 10px 0;
+  padding: 10px;
+  background: #f8f8f8;
+  border-radius: 5px;
+  font-size: 14px;
+  line-height: 1.5;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
 
         </style>
     <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
@@ -107,7 +148,62 @@ h1, h3, p{
     <h1>İtiraz Sonuç Ekranı</h1><br>
     <h3>Bireysel Başvuru İtiraz Ekranı</h3><br>
     <p>Bu allanda anlık gelen talepler tablosuna yer verilmiştir. Altta yer alan kısımlar da hasar durumlarına göre ayrılarak detaylandırılmıştır</p>
-<center>
+
+    <center>
+        <br><br>
+        <form method="get">
+  <div class="search-box">
+    <input type="text" name="query" placeholder="Durum Arama">
+    <button type="submit"><i class="fa fa-search"></i></button>
+  </div>
+</form>
+
+    <br><br>
+	<?php
+	// Veritabanı bağlantısı
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "seminer";
+
+	$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+	if (!$conn) {
+	    die("Connection failed: " . mysqli_connect_error());
+	}
+
+	// Arama sorgusunu al
+	if (isset($_GET["query"])) {
+		$query = $_GET["query"];
+
+// Veritabanında arama yap
+$sql = "SELECT * FROM hasar_tespiti WHERE durum LIKE '%$query%'";
+$result = mysqli_query($conn, $sql);
+
+// Tabloyu yazdır
+echo "<table>";
+echo "<tr><th>Aşkı Kodu</th><th>İl</th><th>İlçe</th><th>Mahalle</th><th>Sokak</th><th>Bina No</th><th>Durum</th><th>İtiraz Sonucu</th></tr>";
+
+if (mysqli_num_rows($result) > 0) {
+    while($row = mysqli_fetch_assoc($result)) {
+        echo "<tr><td>".$row["aski_kodu"]."</td><td>".$row["il"]."</td><td>".$row["ilce"]."</td><td>".$row["mahalle"]."</td><td>".$row["sokak"]."</td><td>".$row["bina_no"]."</td><td>".$row["durum"]."</td><td>".$row["itiraz_sonucu"]."</td></tr>";
+    }
+} else {
+    echo "<tr><td colspan='9'>Arama sonucu bulunamadı</td></tr>";
+}
+
+echo "</table>";
+
+		} else {
+		    //echo "Arama sonucu bulunamadı";
+		}
+	
+
+	mysqli_close($conn);
+	?>
+
+<ul id="searchResults"></ul>
+<br>
 <?php
 // Veritabanı bağlantısı
 $servername = "localhost";
@@ -173,9 +269,95 @@ if (mysqli_num_rows($result_te) > 0) {
 
 mysqli_close($conn);
 ?>
+
+<style>
+table {
+  width: 100%; /* Tablonun yüzde olarak genişliği */
+  max-width: 1000px; /* Tablonun en fazla alabileceği genişlik */
+  margin: 0 auto; /* Tabloyu ortalamak için */
+}
+
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+tbody{
+  height: 900px;
+  overflow-y: scroll;
+  display: block;
+}
+
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead {
+  width: calc( 100% - 1em )
+}
+
+table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 1em;
+  font-family: sans-serif;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+</style>
+
 </center>
 </div>
 
 
 </body>
-</html
+</html>
+<script>
+    // Arama kutusunu seçin
+const search = document.getElementById('search');
+
+// Arama sonuçlarının görüntüleneceği liste öğesini seçin
+const searchResults = document.getElementById('searchResults');
+
+// Tüm sayfadaki metni seçin
+const pageText = document.body.innerText;
+
+// Arama kutusunda herhangi bir değişiklik olduğunda çalışacak fonksiyon
+search.addEventListener('input', () => {
+  // Arama kutusundaki metni alın
+  const searchTerm = search.value.toLowerCase();
+
+  // Arama sonuçlarını temizleyin
+  searchResults.innerHTML = '';
+
+  // Eğer arama kutusu boş ise sonuçları göstermeyin
+  if (searchTerm === '') {
+    return;
+  }
+
+  // Sayfadaki metinde arama yapın
+  const matches = pageText.match(new RegExp(searchTerm, 'gi'));
+
+  // Her eşleşen sonucu gösterin
+  matches.forEach(match => {
+    const li = document.createElement('li');
+    li.innerText = match;
+    searchResults.appendChild(li);
+  });
+});
+
+</script>
