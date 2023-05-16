@@ -875,7 +875,7 @@ if (!$conn) {
 }
 
 // Hasar Tespit Edildi olan kayıtların sorgusu
-$sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Ağır Hasarlı'";
+$sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Ağır Hasarlı' or durum='Ag?r Hasarli' or durum='Agir Hasarli'";
 
 // Hasar Tespit Edildi olan kayıtların tabloya eklenmesi
 $result_hte = mysqli_query($conn, $sql_hte);
@@ -957,10 +957,10 @@ table {
             }
 
             // Hasar Tespit Edildi olan kayıtların sorgusu
-            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Ağır Hasarlı'";
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Ağır Hasarlı' or durum='Ag?r Hasarli' or durum='Agir Hasarli'";
 
             // İl verilerinin alınması
-            $sql_il = "SELECT il, COUNT(*) as count FROM hasar_tespiti WHERE durum='Ağır Hasarlı' GROUP BY il";
+            $sql_il = "SELECT il, COUNT(*) as count FROM hasar_tespiti WHERE durum='Ağır Hasarlı'  GROUP BY il";
             $result_il = mysqli_query($conn, $sql_il);
 
             // Chart'ın oluşturulması
