@@ -118,7 +118,11 @@ h1, h3, p{
 			flex-wrap: wrap;
             justify-content: space-between;
 		}
-
+        .container8 {
+			display: flex;
+			flex-wrap: wrap;
+            justify-content: space-between;
+		}
         .box {
             width: calc(33.33% - 10px);
             height: 100px;
@@ -146,6 +150,323 @@ h1, h3, p{
     <h3>Bireysel Başvuru Hasar Tespiti Analizi</h3><br>
     <p>Bu allanda anlık gelen talepler tablosuna ve taleplerin toplandığı bölge, il, ilçe bazlı grafiklerine yer verilmiştir. </p>
 <center>
+
+<br><br>
+<div class="container8">
+<div id=box>
+<?php
+// Veritabanı bağlantısı
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "seminer";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Veritabanı bağlantısı başarısız: " . $conn->connect_error);
+}
+
+// Verileri sorgula
+$sql = "SELECT il, COUNT(*) AS sayi FROM hasar_tespiti GROUP BY il";
+$result = $conn->query($sql);
+
+// Google Charts için veri dizisi oluştur
+$data = array();
+$data[] = ['İl', 'Hasar Sayısı'];
+while ($row = $result->fetch_assoc()) {
+    $data[] = [$row['il'], (int)$row['sayi']];
+}
+
+// JSON formatına çevir
+$jsonData = json_encode($data);
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hasar Tespiti İller Grafiği</title>
+    <!-- Google Charts kütüphanesini yükle -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            // Veri dizisini al
+            var data = google.visualization.arrayToDataTable(<?php echo $jsonData; ?>);
+
+            // Grafik seçenekleri
+            var options = {
+                title: 'Hasar Tespiti İller Grafiği',
+                is3D: true
+            };
+
+            // Grafik nesnesini oluştur ve ekrana çiz
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+    <!-- Grafik için yer tutucu -->
+    <div id="chart_div" style="width: 500px; height: 300px;"></div>
+</body>
+</html>
+
+</div>
+<div id=box>
+<?php
+// Veritabanı bağlantısı
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "seminer";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Veritabanı bağlantısı başarısız: " . $conn->connect_error);
+}
+
+// Verileri sorgula
+$sql = "SELECT ilce, COUNT(*) AS sayi FROM hasar_tespiti GROUP BY ilce";
+$result = $conn->query($sql);
+
+// Google Charts için veri dizisi oluştur
+$data = array();
+$data[] = ['İlce', 'Hasar Sayısı'];
+while ($row = $result->fetch_assoc()) {
+    $data[] = [$row['ilce'], (int)$row['sayi']];
+}
+
+// JSON formatına çevir
+$jsonData = json_encode($data);
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hasar Tespiti İlceler Grafiği</title>
+    <!-- Google Charts kütüphanesini yükle -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            // Veri dizisini al
+            var data = google.visualization.arrayToDataTable(<?php echo $jsonData; ?>);
+
+            // Grafik seçenekleri
+            var options = {
+                title: 'Hasar Tespiti İlçeler Grafiği',
+                is3D: true
+            };
+
+            // Grafik nesnesini oluştur ve ekrana çiz
+            var chart = new google.visualization.PieChart(document.getElementById('ilce'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+    <!-- Grafik için yer tutucu -->
+    <div id="ilce" style="width: 500px; height: 300px;"></div>
+</body>
+</html>
+    
+</div>
+<div id=box>
+<?php
+// Veritabanı bağlantısı
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "seminer";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Veritabanı bağlantısı başarısız: " . $conn->connect_error);
+}
+
+// Verileri sorgula
+$sql = "SELECT mahalle, COUNT(*) AS sayi FROM hasar_tespiti GROUP BY mahalle";
+$result = $conn->query($sql);
+
+// Google Charts için veri dizisi oluştur
+$data = array();
+$data[] = ['mahalle', 'Hasar Sayısı'];
+while ($row = $result->fetch_assoc()) {
+    $data[] = [$row['mahalle'], (int)$row['sayi']];
+}
+
+// JSON formatına çevir
+$jsonData = json_encode($data);
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hasar Tespiti Mahalle Grafiği</title>
+    <!-- Google Charts kütüphanesini yükle -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            // Veri dizisini al
+            var data = google.visualization.arrayToDataTable(<?php echo $jsonData; ?>);
+
+            // Grafik seçenekleri
+            var options = {
+                title: 'Hasar Tespiti Mahalle Grafiği',
+                is3D: true
+            };
+
+            // Grafik nesnesini oluştur ve ekrana çiz
+            var chart = new google.visualization.PieChart(document.getElementById('mahalle'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+    <!-- Grafik için yer tutucu -->
+    <div id="mahalle" style="width: 500px; height: 300px;"></div>
+</body>
+</html>
+    </div>  
+</div><br><br>
+<?php
+// Veritabanı bağlantısı
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "seminer";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Veritabanı bağlantısı başarısız: " . $conn->connect_error);
+}
+
+// Verileri sorgula
+$sql = "SELECT il, COUNT(*) AS sayi FROM hasar_tespiti GROUP BY il";
+$result = $conn->query($sql);
+
+// Google Charts için veri dizisi oluştur
+$data = array();
+$data[] = ['İl', 'Hasar Sayısı'];
+while ($row = $result->fetch_assoc()) {
+    $data[] = [$row['il'], (int)$row['sayi']];
+}
+
+// JSON formatına çevir
+$jsonData = json_encode($data);
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hasar Tespiti İller Grafiği</title>
+    <!-- Google Charts kütüphanesini yükle -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            // Veri dizisini al
+            var data = google.visualization.arrayToDataTable(<?php echo $jsonData; ?>);
+
+            // Grafik seçenekleri
+            var options = {
+                title: 'Hasar Tespiti İller Grafiği',
+                histogram: { bucketSize: 1 }, // Histogram için bucketSize belirleyin
+                legend: { position: 'none' },
+                hAxis: { title: 'Hasar Sayısı' },
+                vAxis: { title: 'İl' }
+            };
+
+            // Grafik nesnesini oluştur ve ekrana çiz
+            var chart = new google.visualization.Histogram(document.getElementById('hist'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+    <!-- Grafik için yer tutucu -->
+    <div id="hist" style="width: 900px; height: 600px;"></div>
+</body>
+</html>
+
+<br><br>
+<?php
+// Veritabanı bağlantısı
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "seminer";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Veritabanı bağlantısı başarısız: " . $conn->connect_error);
+}
+
+// Verileri sorgula
+$sql = "SELECT il, COUNT(*) AS sayi FROM hasar_tespiti GROUP BY il";
+$result = $conn->query($sql);
+
+// Google Charts için veri dizisi oluştur
+$data = array();
+$data[] = ['İl', 'Hasar Sayısı'];
+while ($row = $result->fetch_assoc()) {
+    $data[] = [$row['il'], (int)$row['sayi']];
+}
+
+// JSON formatına çevir
+$jsonData = json_encode($data);
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hasar Tespiti İller Grafiği</title>
+    <!-- Google Charts kütüphanesini yükle -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            // Veri dizisini al
+            var data = google.visualization.arrayToDataTable(<?php echo $jsonData; ?>);
+
+            // Grafik seçenekleri
+            var options = {
+                title: 'Hasar Tespiti İller Grafiği',
+                curveType: 'function', // Çizgi grafiği tipi
+                legend: { position: 'bottom' },
+                hAxis: { title: 'İl' },
+                vAxis: { title: 'Hasar Sayısı' }
+            };
+
+            // Grafik nesnesini oluştur ve ekrana çiz
+            var chart = new google.visualization.LineChart(document.getElementById('ciz'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+    <!-- Grafik için yer tutucu -->
+    <div id="ciz" style="width: 900px; height: 600px;"></div>
+</body>
+</html>
+
+<br><br>
 <?php
 // Veritabanı bağlantısı
 $servername = "localhost";
@@ -875,7 +1196,7 @@ if (!$conn) {
 }
 
 // Hasar Tespit Edildi olan kayıtların sorgusu
-$sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Ağır Hasarlı' or durum='Ag?r Hasarli' or durum='Agir Hasarli'";
+$sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Ağır Hasarlı'";
 
 // Hasar Tespit Edildi olan kayıtların tabloya eklenmesi
 $result_hte = mysqli_query($conn, $sql_hte);
@@ -957,7 +1278,7 @@ table {
             }
 
             // Hasar Tespit Edildi olan kayıtların sorgusu
-            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Ağır Hasarlı' or durum='Ag?r Hasarli' or durum='Agir Hasarli'";
+            $sql_hte = "SELECT * FROM hasar_tespiti WHERE durum='Ağır Hasarlı'";
 
             // İl verilerinin alınması
             $sql_il = "SELECT il, COUNT(*) as count FROM hasar_tespiti WHERE durum='Ağır Hasarlı'  GROUP BY il";
@@ -1573,7 +1894,7 @@ table {
     </div>
 </div>
 <br><br>
-<br><br><br><br>
+
 </div>
 </body></center>
 </html>
