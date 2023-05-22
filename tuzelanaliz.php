@@ -179,6 +179,8 @@ input[type="submit"] {
 	<title>Yetkili Girişi</title>
     <div id="top">
     <div id="bar-title">
+    <a href="iller.php"><div id="iller">İller</div></a>
+
         <a href="home.php"><div id="talepler3">Sayfam</div></a>
         <a href="riskanalizi.php"><div id="talepler2">İtiraz Sonuç Ekranı</div></a>
         <a href="taleplerYonetici.php"><div id="talepler">Hasar Tespiti </div></a>
@@ -295,7 +297,17 @@ table {
   overflow-x: auto;
   white-space: nowrap;
 }
-
+#iller{
+    margin-top: 20px;
+    margin-left: 570px;
+    position: absolute;
+    border: 1px solid #105749;
+    border-radius: 15px;
+    padding:10px;
+    position: absolute;
+    width: 150px;
+    text-align: center;
+}
 </style>
 <?php
 $servername = "localhost";

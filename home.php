@@ -67,6 +67,17 @@ echo '<script>alert("Bağlantı başarılı!");</script>';
     width: 150px;
     text-align: center;
 }
+#iller{
+    margin-top: 20px;
+    margin-left: 570px;
+    position: absolute;
+    border: 1px solid #105749;
+    border-radius: 15px;
+    padding:10px;
+    position: absolute;
+    width: 150px;
+    text-align: center;
+}
 #talepler2:hover, #talepler3:hover, #talepler:hover{
     color: white;
     background-color: #105749;
@@ -219,12 +230,12 @@ li:before {
   }
 }
 
-  
 </style>
 <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
 	<title>Yetkili Girişi</title>
     <div id="top">
     <div id="bar-title">
+        <a href="iller.php"><div id="iller">İller</div></a>
         <a href="home.php"><div id="talepler3">Sayfam</div></a>
         <a href="riskanalizi.php"><div id="talepler2">İtiraz Sonuç Ekranı</div></a>
         <a href="taleplerYonetici.php"><div id="talepler">Hasar Tespiti </div></a>
@@ -307,14 +318,14 @@ mysqli_close($conn);
           vAxis: {title: 'Toplam Deprem Sayısı'}
         };
 
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div777'));
 
         chart.draw(data, options);
       }
     </script>
   </head>
   <body>
-    <div id="chart_div" style="width: 1400px; height: 500px; color: orange;"></div>
+    <div id="chart_div777" style="width: 1400px; height: 500px; color: orange;"></div>
   </body>
 </html>
 
@@ -359,23 +370,24 @@ mysqli_close($conn);
       <div id="counter">
       <p style="color: darkgreen;">RİSKLİ YAPI TESPİTİ SONRASINDA YIKILAN BAĞIMSIZ BİRİM SAYISI </p> 
   <span class="digit">8</span>
-  <span class="digit">1</span>
-  <span class="digit">7</span>
-  <span class="digit">.</span>
-  <span class="digit">9</span>
   <span class="digit">2</span>
-  <span class="digit">8</span>
+  <span class="digit">4</span>
+  <span class="digit">.</span>
+  <span class="digit">0</span>
+  <span class="digit">7</span>
+  <span class="digit">9</span>
 </div>
 <div id="counter2">
       <p style="color: darkgreen;">RİSKLİ YAPI TESPİTİ YAPILAN BAĞIMSIZ BİRİM SAYISI</p>
   <span class="digit">9</span>
-  <span class="digit">0</span>
-  <span class="digit">8</span>
+  <span class="digit">4</span>
+  <span class="digit">4</span>
   <span class="digit">.</span>
-  <span class="digit">5</span>
-  <span class="digit">0</span>
+  <span class="digit">4</span>
+  <span class="digit">4</span>
   <span class="digit">7</span>
 </div>
+
 </section>
 
 		<section id="iletisim">
