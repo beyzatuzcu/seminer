@@ -388,7 +388,44 @@ mysqli_close($conn);
   <span class="digit">7</span>
 </div>
 
-</section>
+<?php
+// Veritabanı bağlantısı
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "seminer";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Veritabanı bağlantısı başarısız: " . $conn->connect_error);
+}
+
+// Durumları sayma
+$query = "SELECT durum, COUNT(*) AS durum_sayisi FROM hasar_tespiti GROUP BY durum";
+$result = $conn->query($query);
+
+// Sonuçları tabloda yazdırma
+if ($result->num_rows > 0) {
+    echo "<table style='border-collapse: collapse; width: 100%;'>
+            <tr>
+                <th style='border: 1px solid #000; padding: 8px;'>Durum</th>
+                <th style='border: 1px solid #000; padding: 8px;'>Sayı</th>
+            </tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td style='border: 1px solid #000; padding: 8px;'>" . $row['durum'] . "</td>
+                <td style='border: 1px solid #000; padding: 8px;'>" . $row['durum_sayisi'] . "</td>
+              </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "Tabloda veri bulunamadı.";
+}
+
+$conn->close();
+?>
+
+</section><br><br>
 
 		<section id="iletisim">
 			<h2>İletişim Kanalları</h2>

@@ -70,67 +70,6 @@
     border: 1px solid #105749;
 }
 
-table {
-  font-size: 36px;
-  background-color: #f9f9f9;
-  width: 1000px;
-}
-
-th, td {
-  padding: 8px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background-color: #4CAF50;
-  color: white;
-}
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th, td {
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even){background-color: #f2f2f2}
-
-th {
-  background-color: #4CAF50;
-  color: white;
-}
-
-tbody{
-  height: 200px;
-  overflow-y: scroll;
-  display: block;
-}
-
-thead, tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-}
-
-thead {
-  width: calc( 100% - 1em )
-}
-
-table {
-  width: 100%;
-  margin: 0;
-  border-collapse: collapse;
-  border-spacing: 0;
-  font-size: 1em;
-  font-family: sans-serif;
-  display: block;
-  overflow-x: auto;
-  white-space: nowrap;
-}
-
 #analiz{
     flex-basis: 300px;
     height: auto;
@@ -290,6 +229,8 @@ $conn->close();
     <div id="adana" style="width: 100%; height: 500px;"></div>
 </body>
 </html>
+
+
 </div>
 
 <div class="container1">
@@ -320,7 +261,7 @@ $conn->close();
 <!DOCTYPE html>
 <html>
 <head>
-    <title>?Adıyaman İlinde Hasar Tespiti Pasta Grafiği</title>
+    <title>Adıyaman İlinde Hasar Tespiti Pasta Grafiği</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         google.charts.load('current', { 'packages': ['corechart'] });
